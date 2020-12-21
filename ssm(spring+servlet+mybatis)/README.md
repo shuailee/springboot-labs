@@ -1,2 +1,0 @@
-# ssm
-spring + servlet + mybatis
