@@ -1,0 +1,41 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--一个servlet配置，应用程序只会创建一次一个servlet实例，这里配置了两个servlet意味着最多可以创建两个不同的servlet实例；
+  myservletdemo1 将会在第一次命中mapping规则的请求到达时创建，并初始化init，后面讲不会再创建新的。
+  -->
+  <servlet>
+    <servlet-name>myservletdemo1</servlet-name>
+    <servlet-class>servletdemo.MyServletDemo1</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DispatcherServletv2</servlet-name>
+    <servlet-class>mvcframework.v1servlet.DispatcherServletv2</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:application.properties</param-value>
+    </init-param>
+    <!--
+    此配置会让WEB应用程序在启动时，装载并创建当前Servlet的实例对象、以及调用Servlet实例对象的init()方法
+    DispatcherServletv1将会在项目启动时创建，并初始化；
+    -->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!--默认的servlet映射-->
+  <servlet-mapping>
+    <servlet-name>myservletdemo1</servlet-name>
+    <url-pattern>/default</url-pattern>
+  </servlet-mapping>
+
+  <!--走手写的spring框架的servlet映射-->
+  <servlet-mapping>
+    <servlet-name>DispatcherServletv2</servlet-name>
+    <url-pattern>/query/*</url-pattern>
+  </servlet-mapping>
+</web-app>
