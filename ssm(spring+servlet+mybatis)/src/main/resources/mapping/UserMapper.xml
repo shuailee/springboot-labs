@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="dao.IUserDao">
+    <!--查询用户信息并分页 -->
+    <select id="queryUserPager" resultType="model.User">
+        select t.user_id,t.user_name,t.user_sex,date_format(t.user_birthday,'%Y-%m-%d')user_birthday,
+        t.user_email,t.user_edu,t.user_telephone,t.user_address
+        from tb_user t
+        order by t.create_time desc
+        limit #{skip},#{size}
+
+    </select>
+    <!--查询用户总数 -->
+    <select id="queryUserCount" resultType="int">
+        select count(*) from tb_user
+    </select>
+
+</mapper>

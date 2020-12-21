@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 1 配置注解的处理器映射器和处理器适配器 -->
+    <!-- <mvc:annotation-driven /> 是一种简写形式，完全可以手动配置替代这种简写形式，简写形式可以让初学者
+        快速应用默认配置方案。<mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping与
+        AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的。 -->
+    <mvc:annotation-driven /> <!--ajax post提交的时候需要此配置-->
+    <context:annotation-config></context:annotation-config>
+
+    <!--2 加入component-scan标签,指明 controller 所在包，并扫描其中的注解-->
+    <context:component-scan base-package="helper,controller,model,service,dao"></context:component-scan>
+    <!--&lt;!&ndash; 3.Spring MVC不处理静态资源  &ndash;&gt;-->
+    <!--<mvc:default-servlet-handler/>-->
+
+    <!--4 ViewResolver 视图解析器
+      关于controller如何找到视图文件，这里需要详细的说明。在 controller 的一个方法中，返回的字符串定义了所需访问的jsp的名字（如上面的index）。
+      在jspViewResolver中，有两个属性，一个是prefix，定义了所需访问的文件路径前缀，
+      另一是suffix，表示要访问的文件的后缀，这里为 .jsp。那么，如果返回字符串是 xxx ，SpringMVC就会找到 /WEB-INF/pages/xxx.jsp 文件
+    -->
+    <!--用于支持Servlet、JSP视图解析-->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
