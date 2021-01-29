@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class FJsonConfig {
+public class MyFastJsonConfig {
 
     @Bean
     public HttpMessageConverter configureMessageConverters() {
