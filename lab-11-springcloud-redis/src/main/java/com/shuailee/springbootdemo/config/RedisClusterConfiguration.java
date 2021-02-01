@@ -11,9 +11,12 @@ public class RedisClusterConfiguration{
 
     @Bean
     public RedisTemplate<String,String> redisTemplate(RedisConnectionFactory redisConnectionfactory){
+        // 配置redisTemplate
         RedisTemplate<String,String> redisTemplate=new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionfactory);
+        //key序列化器
         redisTemplate.setKeySerializer(new StringRedisSerializer());
+        //value序列化器
         redisTemplate.setValueSerializer(new StringRedisSerializer());
         redisTemplate.afterPropertiesSet();
         return redisTemplate;

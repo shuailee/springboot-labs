@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @package: com.shuailee.springbootdemo.rediscache
- * @description: 发者可以通过自定义CacheResolver实现动态选择CacheManager
+ * @description: 多级缓存实现，可以通过自定义CacheResolver实现动态选择CacheManager
  * 调用时使用多种缓存机制：优先从堆内存读取缓存，堆内存缓存不存在时再从redis读取缓存，redis缓存不存在时最后从mysql读取数据，并将读取到的数据依次写到redis和堆内存中。
  * @author: klein
  * @date: 2021-01-29 18:05

@@ -6,7 +6,8 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 
 /**
  * @package: com.shuailee.springbootdemo.rediscache
- * @description: 缓存异常自定义处理类， redis作为缓存，查询或更新失败时的处理策略（如果不自定义异常处理，默认是抛出异常，但是这样会影响业务流程，所以现实是我们往往选择忽略缓存的异常，只记录）
+ * @description: 缓存异常自定义处理类
+ * redis作为缓存，查询或更新失败时的处理策略（如果不自定义异常处理，默认是抛出异常，但是这样会影响业务流程，所以现实是我们往往选择忽略缓存的异常，只记录）
  * @author: klein
  * @date: 2021-01-29 17:48
  **/
