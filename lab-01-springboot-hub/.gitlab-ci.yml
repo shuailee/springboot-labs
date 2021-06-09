@@ -1,0 +1,115 @@
+# 定义全局的docker镜像，这样在此下面的每个步骤都可以直接使用docker命令
+image: docker:latest
+services:
+  - docker:18.09.7-dind
+#变量
+variables:
+  APP_NAME: "lab-01-springboot-hub"
+  APP_ID: "lab-01-springboot-hub"
+  NAME_SPACE: "shuailee"
+  IMAGE_REPOSITORY_PATH: "registry.cn-hangzhou.aliyuncs.com"
+  APP_IMAGE_REPOSITORY_PATH: "registry.cn-hangzhou.aliyuncs.com/${NAME_SPACE}/${APP_NAME}"
+
+#定义步骤列表
+stages:
+  - sonar
+  - build
+  - push_image
+  - deploy
+# 执行 SonarQube 分析，并将检测结果推送至 SonarQube
+job_sonar:
+  stage: sonar
+  when: manual
+  variables:
+    SONAR_TOKEN: "ae7b2be1244a8c69330dfa57c9993fdf7bb89cdf"
+    SONAR_HOST_URL: "http://192.168.5.14:9000/"
+  script:
+    # 执行 SonarQube 分析，并将检测结果推送至 SonarQube
+    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN
+    # 执行 SonarQube 分析，并将检测结果反馈至 GitLab
+    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN  -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.gitlab.project_id=$CI_PROJECT_ID
+  tags:
+    - shell-runner
+  only:
+    - master
+
+# 定义构建步骤的作业
+job_build:
+  # 可以使用mvn命令,不需要在runner主机上安装maven
+  # 必须使用docker类型的执行器，否则将无法创建image: maven:3-jdk-8的容器，也就无法执行mvn命令
+  image: maven:3-jdk-8
+  stage: build
+  when: manual
+  # 定义由runner执行的shell脚本
+  script:
+    - echo "building package"
+    - mvn clean package -Dmaven.test.skip=true
+    # 在容器根目录创建一个文件夹来放所有的构建物：sartifacts/lab-01-springboot-hub
+    - mkdir -p sartifacts/lab-01-springboot-hub/
+    - cp -r target/lab-01-springboot-hub-*.jar Dockerfile sartifacts/lab-01-springboot-hub/
+    # 打印sartifacts目录的层级
+    - du -h --max-depth=1 sartifacts
+  # 打包后，可下载的资源列表
+  artifacts:
+    # 使用当前作业名称以及当前分支或tag版本标签名作为工件名称
+    name:  ${CI_JOB_NAME}_${CI_COMMIT_REF_NAME}
+    # 于指定哪些文件或文件夹会被打包成工件
+    paths:
+      - sartifacts/*
+    expire_in: 1 day
+
+  only:
+    - master
+  tags:
+    - docker-runner
+
+# 创建镜像
+job_build_image:
+  stage: push_image
+  when: manual
+  script:
+    - echo "build image by Dockerfile..."
+    # 根据Dockerfile创建本地镜像, 并追加启动环境变量.  docker build -f xxx 指定Dockerfile文件创建镜像
+    # --tag, -t: 镜像的名字及标签，通常 name:tag 或者 name 格式；可以在一次构建中为一个镜像设置多个标签。
+    # --build-arg APOLLO_NAME_SPACES=${APOLLO_NAME_SPACES}
+    # - docker build -f Dockerfile -t ${APP_IMAGE_REPOSITORY_PATH}:${CI_COMMIT_SHORT_SHA} . --build-arg APP_ID=${APP_ID}
+    - echo "push image..."
+    # 登陆镜像仓库，账号密码类的可以配成gittlab的全局变量
+    - docker login -u shuailee@outlook.com -p lishuai617 registry.cn-hangzhou.aliyuncs.com
+    # 创建本地镜像（--pull 尝试去更新镜像的新版本)
+    - docker build --pull -t "registry.cn-hangzhou.aliyuncs.com:${CI_COMMIT_SHORT_SHA}" ./sartifacts/lab-01-springboot-hub/  --build-arg APP_ID=${APP_ID}
+    - docker images
+    - ls ./sartifacts/lab-01-springboot-hub/
+    # 为指定镜像打tag并推送到远程镜像仓库,我这里打了两个tag，打一个latest镜像和最新提交的镜像
+    - docker tag "registry.cn-hangzhou.aliyuncs.com:${CI_COMMIT_SHORT_SHA}" ${APP_IMAGE_REPOSITORY_PATH}:latest
+    - docker tag "registry.cn-hangzhou.aliyuncs.com:${CI_COMMIT_SHORT_SHA}" ${APP_IMAGE_REPOSITORY_PATH}:${CI_COMMIT_SHORT_SHA}
+    - docker images
+    - docker push ${APP_IMAGE_REPOSITORY_PATH}:${CI_COMMIT_SHORT_SHA}
+    - docker push ${APP_IMAGE_REPOSITORY_PATH}:latest
+    # 移除本地镜像
+    - docker rmi ${APP_IMAGE_REPOSITORY_PATH}:latest
+    - docker rmi  ${APP_IMAGE_REPOSITORY_PATH}:${CI_COMMIT_SHORT_SHA}
+    - docker images
+  tags:
+    - docker-runner
+
+# 定义发布步骤的作业
+# 通过ssh连接到远程服务器，并执行指定目录下的docker-compose文件
+job_deploy:
+  stage: deploy
+  when: manual
+  variables:
+    deploy_path: "/usr/local/deploy/lab-01-springboot-hub"
+  script:
+    # 需要在runner服务器上对目标服务器做ssh免密登陆授权，如果runner是docker形式安装的,不能使用root账号胡授权，需要使用gitlab账号授权)
+    - ssh -t -t root@192.168.5.16 "cd $deploy_path && docker-compose pull && docker-compose up -d"
+    # - ssh -t root@192.168.5.16 "cd $deploy_path && docker-compose pull && docker-compose up -d"
+    # - docker run --rm harbor2048.deepexi.com/applife/kubectl:stable set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG_NAME}${CI_COMMIT_SHORT_SHA} -n ${NAME_SPACE}
+  tags:
+    # 使用shell执行器，也可以使用docker执行器
+    - shell-runner
+  only:
+    - master
+
+# dev_1修改
+

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  lab-01-springboot-hub:
+    environment:
+      TZ: Asia/Shanghai
+    restart: always
+    image: registry.cn-hangzhou.aliyuncs.com/shuailee/lab-01-springboot-hub:latest
+    container_name: lab-01-springboot-hub
+    volumes:
+      - /data/logs/lab-01-springboot-hub:/data/logs
+    ports:
+      - 8080:8080
+    user: root
