@@ -63,6 +63,8 @@ public class UserMapperTest {
 
         System.out.println(("----- selectPage method test ------"));
 
+
+        // 分页需要配置 MybatisPlusInterceptor 分页拦截器
         // 内存分页
         // Page<User> userPage = userMapper.selectPage(new Page<>(1, 2), null);
         // 使用QueryWrapper条件构造器进行分页，物理分页
