@@ -14,6 +14,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <mysql-connecto.version>8.0.19</mysql-connecto.version>
+        <spring.shiro.version>1.6.0</spring.shiro.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connecto.version}</version>
         </dependency>
+
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${spring.shiro.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
