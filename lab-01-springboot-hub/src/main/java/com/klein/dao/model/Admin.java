@@ -2,12 +2,16 @@ package com.klein.dao.model;
 
 import java.util.Date;
 
-public class Role {
+public class Admin {
     private Long id;
 
     private String tenantId;
 
-    private String roleName;
+    private String userCode;
+
+    private String userName;
+
+    private String userPassword;
 
     private Boolean status;
 
@@ -37,12 +41,28 @@ public class Role {
         this.tenantId = tenantId == null ? null : tenantId.trim();
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
     public Boolean getStatus() {

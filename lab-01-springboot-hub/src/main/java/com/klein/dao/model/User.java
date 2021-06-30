@@ -1,39 +1,175 @@
 package com.klein.dao.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.util.Date;
 
-import java.util.Set;
-
-/**
- * @package: com.klein.dao
- * @description:
- * @author: klein
- * @date: 2021-06-09 18:12
- **/
-@Data
-//指定表名
-@TableName(value = "User")
-@AllArgsConstructor
 public class User {
-    /**
-     * value与数据库主键列名一致，若实体类属性名与表主键列名一致可省略value
-     * 指定自增策略
-     * */
-    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
-    /**
-     * 若没有开启驼峰命名，或者表中列名不符合驼峰规则，可通过该注解指定数据库表中的列名，exist标明数据表中有没有对应列
-     * */
-    @TableField(value = "userName",exist = true)
+
+    private String tenantId;
+
+    private Long appId;
+
+    private String userCode;
+
     private String userName;
-    private String password;
-    /**
-     * 用户对应的角色集合
-     */
-    private Set<Role> roles;
+
+    private String userPassword;
+
+    private String userNickName;
+
+    private String deviceNumber;
+
+    private String phone;
+
+    private String email;
+
+    private Byte channelType;
+
+    private Long inviterId;
+
+    private Boolean type;
+
+    private Boolean status;
+
+    private Boolean isDeleted;
+
+    private Date updatedTime;
+
+    private Date createdTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId == null ? null : tenantId.trim();
+    }
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName == null ? null : userNickName.trim();
+    }
+
+    public String getDeviceNumber() {
+        return deviceNumber;
+    }
+
+    public void setDeviceNumber(String deviceNumber) {
+        this.deviceNumber = deviceNumber == null ? null : deviceNumber.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Byte getChannelType() {
+        return channelType;
+    }
+
+    public void setChannelType(Byte channelType) {
+        this.channelType = channelType;
+    }
+
+    public Long getInviterId() {
+        return inviterId;
+    }
+
+    public void setInviterId(Long inviterId) {
+        this.inviterId = inviterId;
+    }
+
+    public Boolean getType() {
+        return type;
+    }
+
+    public void setType(Boolean type) {
+        this.type = type;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
 }
