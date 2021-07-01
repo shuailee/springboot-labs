@@ -3,11 +3,11 @@ package com.klein.dao.model;
 import java.util.Date;
 
 public class RoleAdminRelation {
-    private Integer id;
+    private Long id;
 
     private String tenantId;
 
-    private Integer adminId;
+    private Integer userId;
 
     private Integer roleId;
 
@@ -23,11 +23,11 @@ public class RoleAdminRelation {
 
     private String createdUser;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,12 +39,12 @@ public class RoleAdminRelation {
         this.tenantId = tenantId == null ? null : tenantId.trim();
     }
 
-    public Integer getAdminId() {
-        return adminId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getRoleId() {

@@ -1,23 +1,25 @@
 package com.klein.service.impl;
 
 
-import com.klein.dao.model.Access;
-import com.klein.dao.model.Role;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.klein.dao.mapper.UserMapper;
 import com.klein.dao.model.User;
 import com.klein.service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    @Autowired
+    UserMapper userMapper;
+
     @Override
-    public User getUserByName(String getMapByName) {
-        return getMapByName(getMapByName);
+    public User getUserByName(String username) {
+        QueryWrapper queryWrapper = new QueryWrapper<User>().eq("user_name",username);
+        User user = userMapper.selectOne(queryWrapper);
+
+        return user;
     }
 
     /**

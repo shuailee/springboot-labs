@@ -2,14 +2,18 @@ package com.klein.dao.model;
 
 import java.util.Date;
 
-public class AccessRoleRelation {
-    private Integer id;
+public class Permission {
+    private Long id;
 
     private String tenantId;
 
-    private Integer accessId;
+    private Integer parentId;
 
-    private Integer roleId;
+    private String permissionName;
+
+    private String permissionType;
+
+    private String permissionUrl;
 
     private Boolean status;
 
@@ -23,11 +27,11 @@ public class AccessRoleRelation {
 
     private String createdUser;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,20 +43,36 @@ public class AccessRoleRelation {
         this.tenantId = tenantId == null ? null : tenantId.trim();
     }
 
-    public Integer getAccessId() {
-        return accessId;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setAccessId(Integer accessId) {
-        this.accessId = accessId;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public String getPermissionName() {
+        return permissionName;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName == null ? null : permissionName.trim();
+    }
+
+    public String getPermissionType() {
+        return permissionType;
+    }
+
+    public void setPermissionType(String permissionType) {
+        this.permissionType = permissionType == null ? null : permissionType.trim();
+    }
+
+    public String getPermissionUrl() {
+        return permissionUrl;
+    }
+
+    public void setPermissionUrl(String permissionUrl) {
+        this.permissionUrl = permissionUrl == null ? null : permissionUrl.trim();
     }
 
     public Boolean getStatus() {

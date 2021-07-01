@@ -7,8 +7,6 @@ public class User {
 
     private String tenantId;
 
-    private Long appId;
-
     private String userCode;
 
     private String userName;
@@ -17,17 +15,9 @@ public class User {
 
     private String userNickName;
 
-    private String deviceNumber;
-
     private String phone;
 
     private String email;
-
-    private Byte channelType;
-
-    private Long inviterId;
-
-    private Boolean type;
 
     private Boolean status;
 
@@ -36,6 +26,10 @@ public class User {
     private Date updatedTime;
 
     private Date createdTime;
+
+    private String updatedUser;
+
+    private String createdUser;
 
     public Long getId() {
         return id;
@@ -51,14 +45,6 @@ public class User {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId == null ? null : tenantId.trim();
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
     }
 
     public String getUserCode() {
@@ -93,14 +79,6 @@ public class User {
         this.userNickName = userNickName == null ? null : userNickName.trim();
     }
 
-    public String getDeviceNumber() {
-        return deviceNumber;
-    }
-
-    public void setDeviceNumber(String deviceNumber) {
-        this.deviceNumber = deviceNumber == null ? null : deviceNumber.trim();
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -115,30 +93,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
-    }
-
-    public Byte getChannelType() {
-        return channelType;
-    }
-
-    public void setChannelType(Byte channelType) {
-        this.channelType = channelType;
-    }
-
-    public Long getInviterId() {
-        return inviterId;
-    }
-
-    public void setInviterId(Long inviterId) {
-        this.inviterId = inviterId;
-    }
-
-    public Boolean getType() {
-        return type;
-    }
-
-    public void setType(Boolean type) {
-        this.type = type;
     }
 
     public Boolean getStatus() {
@@ -171,5 +125,21 @@ public class User {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public String getUpdatedUser() {
+        return updatedUser;
+    }
+
+    public void setUpdatedUser(String updatedUser) {
+        this.updatedUser = updatedUser == null ? null : updatedUser.trim();
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser == null ? null : createdUser.trim();
     }
 }

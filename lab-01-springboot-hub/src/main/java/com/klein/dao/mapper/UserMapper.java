@@ -1,8 +1,9 @@
 package com.klein.dao.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.klein.dao.model.User;
 
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     int deleteByPrimaryKey(Long id);
 
     int insert(User record);

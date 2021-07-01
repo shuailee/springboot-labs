@@ -3,13 +3,13 @@ package com.klein.dao.mapper;
 import com.klein.dao.model.RoleAdminRelation;
 
 public interface RoleAdminRelationMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(RoleAdminRelation record);
 
     int insertSelective(RoleAdminRelation record);
 
-    RoleAdminRelation selectByPrimaryKey(Integer id);
+    RoleAdminRelation selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(RoleAdminRelation record);
 

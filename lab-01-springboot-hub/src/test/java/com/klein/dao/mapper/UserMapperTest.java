@@ -2,7 +2,6 @@ package com.klein.dao.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.klein.Lab01SpringbootHubApplicationTests;
 import com.klein.dao.model.User;
 import org.junit.Assert;
 import org.junit.Test;

@@ -2,12 +2,14 @@ package com.klein.dao.model;
 
 import java.util.Date;
 
-public class Access {
+public class PermissionRoleRelation {
     private Long id;
 
     private String tenantId;
 
-    private String accessName;
+    private Integer permissionId;
+
+    private Integer roleId;
 
     private Boolean status;
 
@@ -37,12 +39,20 @@ public class Access {
         this.tenantId = tenantId == null ? null : tenantId.trim();
     }
 
-    public String getAccessName() {
-        return accessName;
+    public Integer getPermissionId() {
+        return permissionId;
     }
 
-    public void setAccessName(String accessName) {
-        this.accessName = accessName == null ? null : accessName.trim();
+    public void setPermissionId(Integer permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public Boolean getStatus() {
