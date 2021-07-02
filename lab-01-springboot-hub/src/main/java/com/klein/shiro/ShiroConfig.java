@@ -14,6 +14,10 @@ import java.util.LinkedHashMap;
 @Configuration
 public class ShiroConfig {
 
+    /**
+     *
+     * https://www.baiyp.ren/SpringBoot%E6%95%B4%E5%90%88Shiro.html
+     * */
     @Bean
     @ConditionalOnMissingBean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {

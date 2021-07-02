@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
@@ -79,24 +80,38 @@ public class HomeController {
         return "安全登出";
     }
 
-    @RequiresRoles("admin")
+
+    /*
+    * @RequiresPermissions(权限)  需要特定权限才能访问
+    * @RequiresRoles(角色)  需要特定角色才能访问
+     * @RequiresAuthentication 需要认证才能访问
+    *
+    * */
+
+    // 需要特定角色才能访问
+    @RequiresRoles("超级管理员")
     @GetMapping("/admin")
     public String admin() {
         return "admin success!";
     }
-
-//    @RequiresPermissions("query")
+    // 需要认证才能访问
+    @RequiresAuthentication
     @GetMapping("/index")
     public String index() {
         return "index success!";
     }
-
-    @RequiresPermissions("add")
+    // 需要特定权限才能访问
+    @RequiresPermissions("userinfo:add")
     @GetMapping("/add")
     public String add() {
         return "add success!";
     }
 
+
+    @GetMapping("/query")
+    public String query() {
+        return "query success!";
+    }
 
     @GetMapping("/error")
     public String error() {
