@@ -1,19 +1,15 @@
 package com.klein.shiro;
 
-import com.klein.shiro.CustomRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.shiro.mgt.SecurityManager;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
@@ -39,10 +35,10 @@ public class ShiroConfig {
      * 配置核心安全事务管理器
      * */
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm) {
+    public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //设置自定义realm.
-        securityManager.setRealm(customRealm);
+        securityManager.setRealm(myShiroRealm());
 
         //配置记住我 参考博客：
         //securityManager.setRememberMeManager(rememberMeManager());
@@ -83,9 +79,9 @@ public class ShiroConfig {
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
+//        filterChainDefinitionMap.put("/css/**", "anon");
+//        filterChainDefinitionMap.put("/js/**", "anon");
+//        filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         //logout登出是shiro提供的过滤器
         filterChainDefinitionMap.put("/logout", "logout");

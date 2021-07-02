@@ -2,7 +2,7 @@ package com.klein.dao.model;
 
 import java.util.Date;
 
-public class RoleAdminRelation {
+public class RoleUserRelation {
     private Long id;
 
     private String tenantId;

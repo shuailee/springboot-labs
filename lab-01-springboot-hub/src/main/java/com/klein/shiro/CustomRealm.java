@@ -1,12 +1,11 @@
 package com.klein.shiro;
 
-import com.klein.dao.mapper.PermissionMapper;
-import com.klein.dao.mapper.RoleMapper;
-import com.klein.dao.mapper.UserMapper;
 import com.klein.dao.model.Permission;
 import com.klein.dao.model.Role;
 import com.klein.dao.model.User;
-import com.klein.service.LoginService;
+import com.klein.service.PermissionService;
+import com.klein.service.RoleService;
+import com.klein.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -21,16 +20,13 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserMapper userMapper;
+    private RoleService roleService;
 
     @Autowired
-    private RoleMapper roleMapper;
+    private PermissionService permissionService;
 
     @Autowired
-    private PermissionMapper permissionMapper;
-
-    @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     /**
      * @MethodName doGetAuthenticationInfo
@@ -55,7 +51,7 @@ public class CustomRealm extends AuthorizingRealm {
         String password = new String(usernamePasswordToken.getPassword());
 
         //从数据库查询用户信息
-        User user = loginService.getUserByName(username);
+        User user = userService.getUserByName(username);
 
         //可以在这里直接对用户名校验,或者调用 CredentialsMatcher 校验
         if (user == null) {
@@ -97,7 +93,7 @@ public class CustomRealm extends AuthorizingRealm {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
 
         //获取用户角色
-        Set<Role> roles =this.roleMapper.findRolesByUserId(user.getId());
+        Set<Role> roles =this.roleService.findRolesByUserId(user.getId());
 
         //添加角色
         SimpleAuthorizationInfo authorizationInfo =  new SimpleAuthorizationInfo();
@@ -106,7 +102,7 @@ public class CustomRealm extends AuthorizingRealm {
         }
 
         //获取用户权限
-        Set<Permission> permissions =  this.permissionMapper.findPermissionsByRoleId(roles);
+        Set<Permission> permissions =  this.permissionService.findPermissionsByRoleId(roles);
         //添加权限
         for (Permission permission:permissions) {
             authorizationInfo.addStringPermission(permission.getPermissionName());
