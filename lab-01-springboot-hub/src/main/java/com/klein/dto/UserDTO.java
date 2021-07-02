@@ -1,15 +1,17 @@
-package com.klein.dao.model;
+package com.klein.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class UserDTO {
     private Long id;
 
     private String tenantId;
@@ -38,5 +40,6 @@ public class User {
 
     private String createdUser;
 
+    private Set<RoleDTO> roles = new HashSet<>();
 
 }

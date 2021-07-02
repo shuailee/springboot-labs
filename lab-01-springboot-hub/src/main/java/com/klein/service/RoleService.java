@@ -1,6 +1,6 @@
 package com.klein.service;
 
-import com.klein.dao.model.Role;
+import com.klein.dto.RoleDTO;
 
 import java.util.Set;
 
@@ -11,5 +11,6 @@ import java.util.Set;
  * @date: 2021-07-02 11:15
  **/
 public interface RoleService {
-    Set<Role> findRolesByUserId(Long uid);
+
+    Set<RoleDTO> findRolesByUserId(Long uid);
 }

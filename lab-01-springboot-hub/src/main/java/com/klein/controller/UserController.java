@@ -1,6 +1,6 @@
 package com.klein.controller;
 
-import com.klein.dao.model.User;
+import com.klein.dto.UserDTO;
 import com.klein.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -28,11 +28,11 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     @ResponseBody
     public String add() {
-        User user = new User();
-        user.setUserName("klein");
-        user.setPhone("17777777777");
-        user.setUserPassword("123456");
-        userService.insert(user);
+        UserDTO UserDTO = new UserDTO();
+        UserDTO.setUserName("klein");
+        UserDTO.setPhone("17777777777");
+        UserDTO.setUserPassword("123456");
+        userService.insert(UserDTO);
         return "创建用户成功";
     }
 

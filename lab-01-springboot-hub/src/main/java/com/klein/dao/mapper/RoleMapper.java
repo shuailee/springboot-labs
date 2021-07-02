@@ -1,12 +1,13 @@
 package com.klein.dao.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.klein.dao.model.Role;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.Set;
 
-public interface RoleMapper {
+public interface RoleMapper extends BaseMapper<Role> {
     int deleteByPrimaryKey(Long id);
 
     int insert(Role record);

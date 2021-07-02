@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.klein.dao.mapper.RoleUserRelationMapper" >
-  <resultMap id="BaseResultMap" type="com.klein.dao.model.RoleUserRelation" >
+<mapper namespace="com.klein.dao.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.klein.dao.model.Permission" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="tenant_id" property="tenantId" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="permission_name" property="permissionName" jdbcType="VARCHAR" />
+    <result column="permission_type" property="permissionType" jdbcType="VARCHAR" />
+    <result column="permission_url" property="permissionUrl" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="BIT" />
     <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
@@ -14,31 +16,33 @@
     <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, tenant_id, user_id, role_id, status, is_deleted, updated_time, created_time, 
-    updated_user, created_user
+    id, tenant_id, parent_id, permission_name, permission_type, permission_url, status, 
+    is_deleted, updated_time, created_time, updated_user, created_user
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from role_user_relation
+    from permission
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from role_user_relation
+    delete from permission
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.klein.dao.model.RoleUserRelation" >
-    insert into role_user_relation (id, tenant_id, user_id, 
-      role_id, status, is_deleted, 
-      updated_time, created_time, updated_user, 
-      created_user)
-    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{roleId,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR}, 
-      #{createdUser,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.klein.dao.model.Permission" >
+    insert into permission (id, tenant_id, parent_id, 
+      permission_name, permission_type, permission_url, 
+      status, is_deleted, updated_time, 
+      created_time, updated_user, created_user
+      )
+    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{permissionName,jdbcType=VARCHAR}, #{permissionType,jdbcType=VARCHAR}, #{permissionUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR}, #{createdUser,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.klein.dao.model.RoleUserRelation" >
-    insert into role_user_relation
+  <insert id="insertSelective" parameterType="com.klein.dao.model.Permission" >
+    insert into permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -46,11 +50,17 @@
       <if test="tenantId != null" >
         tenant_id,
       </if>
-      <if test="userId != null" >
-        user_id,
+      <if test="parentId != null" >
+        parent_id,
       </if>
-      <if test="roleId != null" >
-        role_id,
+      <if test="permissionName != null" >
+        permission_name,
+      </if>
+      <if test="permissionType != null" >
+        permission_type,
+      </if>
+      <if test="permissionUrl != null" >
+        permission_url,
       </if>
       <if test="status != null" >
         status,
@@ -78,11 +88,17 @@
       <if test="tenantId != null" >
         #{tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=INTEGER},
+      <if test="permissionName != null" >
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null" >
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUrl != null" >
+        #{permissionUrl,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=BIT},
@@ -104,17 +120,23 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.klein.dao.model.RoleUserRelation" >
-    update role_user_relation
+  <update id="updateByPrimaryKeySelective" parameterType="com.klein.dao.model.Permission" >
+    update permission
     <set >
       <if test="tenantId != null" >
         tenant_id = #{tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="roleId != null" >
-        role_id = #{roleId,jdbcType=INTEGER},
+      <if test="permissionName != null" >
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null" >
+        permission_type = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUrl != null" >
+        permission_url = #{permissionUrl,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=BIT},
@@ -137,11 +159,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.klein.dao.model.RoleUserRelation" >
-    update role_user_relation
+  <update id="updateByPrimaryKey" parameterType="com.klein.dao.model.Permission" >
+    update permission
     set tenant_id = #{tenantId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER},
-      role_id = #{roleId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      permission_url = #{permissionUrl,jdbcType=VARCHAR},
       status = #{status,jdbcType=BIT},
       is_deleted = #{isDeleted,jdbcType=BIT},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
@@ -150,4 +174,15 @@
       created_user = #{createdUser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <!-- 使用mybatisplus 结合xml配置 -->
+  <!--根据角色列表信息查询角色权限-->
+  <select id="findPermissionsByRoleId" parameterType="com.klein.dao.model.Role" resultType="com.klein.dao.model.Permission" >
+    SELECT p.* FROM permission p LEFT JOIN permission_role_relation pr ON p.id=pr.permission_id WHERE pr.role_id IN
+    <foreach collection="roles" index="index" item="item" open="(" close=")" separator=",">
+      #{item.id}
+    </foreach>
+  </select>
+
+
 </mapper>

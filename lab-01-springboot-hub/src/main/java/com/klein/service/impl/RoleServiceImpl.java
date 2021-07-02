@@ -2,11 +2,15 @@ package com.klein.service.impl;
 
 import com.klein.dao.mapper.RoleMapper;
 import com.klein.dao.model.Role;
+import com.klein.dto.RoleDTO;
 import com.klein.service.RoleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @package: com.klein.service.impl
@@ -21,7 +25,13 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public Set<Role> findRolesByUserId(Long uid) {
-        return roleMapper.findRolesByUserId(uid);
+    public Set<RoleDTO> findRolesByUserId(Long uid) {
+        Set<Role> roles = roleMapper.findRolesByUserId(uid);
+        Set<RoleDTO> roleDTOS = roles.stream().map(s -> {
+            RoleDTO roleDTO = new RoleDTO();
+            BeanUtils.copyProperties(s, roleDTO);
+            return roleDTO;
+        }).collect(Collectors.toSet());
+        return roleDTOS;
     }
 }

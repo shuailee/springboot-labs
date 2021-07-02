@@ -1,7 +1,8 @@
 package com.klein.service;
 
-import com.klein.dao.model.Permission;
-import com.klein.dao.model.Role;
+
+import com.klein.dto.PermissionDTO;
+import com.klein.dto.RoleDTO;
 
 import java.util.Set;
 
@@ -12,5 +13,5 @@ import java.util.Set;
  * @date: 2021-07-02 13:17
  **/
 public interface PermissionService {
-    Set<Permission> findPermissionsByRoleId(Set<Role> roles);
+    Set<PermissionDTO> findPermissionsByRoleId(Set<RoleDTO> roles);
 }

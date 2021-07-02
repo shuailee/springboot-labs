@@ -1,17 +1,16 @@
 package com.klein.service;
 
-
-import com.klein.dao.model.User;
+import com.klein.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUser();
+    List<UserDTO> getAllUser();
 
-    User getUserByName(String userName);
+    UserDTO getUserByName(String userName);
 
-    int insert(User user);
+    int insert(UserDTO user);
 
     int del(String username);
 }

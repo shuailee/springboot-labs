@@ -35,7 +35,7 @@ public class HomeController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(HttpServletRequest request, String username, String password,  HttpSession session) {
         //对密码进行加密
         //password =new SimpleHash("md5", password, ByteSource.Util.bytes(username.toLowerCase() + "shiro"),2).toHex();
@@ -85,7 +85,7 @@ public class HomeController {
         return "admin success!";
     }
 
-    @RequiresPermissions("query")
+//    @RequiresPermissions("query")
     @GetMapping("/index")
     public String index() {
         return "index success!";

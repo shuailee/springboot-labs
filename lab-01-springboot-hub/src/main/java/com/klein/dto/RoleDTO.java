@@ -1,30 +1,22 @@
-package com.klein.dao.model;
+package com.klein.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+public class RoleDTO {
     private Long id;
 
     private String tenantId;
 
-    private String userCode;
-
-    private String userName;
-
-    private String userPassword;
-
-    private String userNickName;
-
-    private String phone;
-
-    private String email;
+    private String roleName;
 
     private Boolean status;
 
@@ -38,5 +30,5 @@ public class User {
 
     private String createdUser;
 
-
+    private Set<PermissionDTO> permissionDTOS = new HashSet<>();
 }

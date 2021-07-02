@@ -21,7 +21,7 @@ import java.util.*;
  **/
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UserMapperTest {
+public class UserDTOMapperTest {
 
     @Autowired
     UserMapper userMapper;
