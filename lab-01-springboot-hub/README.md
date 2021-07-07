@@ -39,7 +39,8 @@ swagger 的UI增强版：https://github.com/xiaoymin/swagger-bootstrap-ui
  @ApiImplicitParams：多个请求参数
  */
 ```
-
+##### swagger3 
+ springfox-boot-starter: https://segmentfault.com/a/1190000037455077
 #### 2 druid连接池
 #### 3 mybatis-plus
 **文档:** https://mp.baomidou.com/guide/
@@ -55,10 +56,15 @@ swagger 的UI增强版：https://github.com/xiaoymin/swagger-bootstrap-ui
 http://greycode.github.io/shiro/doc/reference.html
 https://github.com/greycode/shiro
 
-#### 5 Ehcache
-官网：https://www.ehcache.org/documentation/
-##### Ehcache本地缓存使用步骤： 
-1. 添加pom依赖
-2. 添加xml配置
-3. 启动类启用cache注解，
-4. 使用@Cacheable(cacheNames = "person",key = "#id") 缓存方法结果
+##### shiro-redis缓存实现
+主要是借助shiro的下面三个组件实现
+* Session Manager 会话管理器
+* Session DAO 会话 DAO，将session保存到数据库、缓存等
+* Cache Manager 缓存管理器，权限认证的缓存、用户及权限信息的缓存等
+
+一般使用第三方的shiro-redis组件：
+shiro-redis文档： https://github.com/alexxiyang/shiro-redis/tree/master/docs
+https://gitee.com/iherus/shiro-redis
+##### ehcache 缓存实现
+https://www.baiyp.ren/SpringBoot%E6%95%B4%E5%90%88Shiro.html
+

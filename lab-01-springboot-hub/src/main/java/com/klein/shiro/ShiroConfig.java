@@ -1,19 +1,28 @@
 package com.klein.shiro;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.shiro.config.ConfigurationException;
+import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.shiro.mgt.SecurityManager;
+import org.springframework.util.StringUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 
 @Configuration
 public class ShiroConfig {
-
 
     /**
      *
@@ -38,6 +47,7 @@ public class ShiroConfig {
 
     /**
      * 配置核心安全事务管理器
+     * SessionsSecurityManager
      * */
     @Bean
     public SecurityManager securityManager() {
@@ -48,14 +58,59 @@ public class ShiroConfig {
         //配置记住我 参考博客：
         //securityManager.setRememberMeManager(rememberMeManager());
 
-        //配置 redis缓存管理器 参考博客：
-        //securityManager.setCacheManager(getEhCacheManager());
+        //配置EhCache缓存管理器
+        securityManager.setCacheManager(getEhCacheManager());
 
-        //配置自定义session管理，使用redis 参考博客：
-        //securityManager.setSessionManager(sessionManager());
+        //配置自定义session管理
+        // securityManager.setSessionManager(sessionManager());
 
 
         return securityManager;
+    }
+
+    /**
+     * 缓存管理器 使用Ehcache实现
+     */
+    @Bean
+    public EhCacheManager getEhCacheManager()
+    {
+        net.sf.ehcache.CacheManager cacheManager = net.sf.ehcache.CacheManager.getCacheManager("ruoyi");
+        EhCacheManager em = new EhCacheManager();
+        if (StringUtils.isEmpty(cacheManager))
+        {
+            em.setCacheManager(new net.sf.ehcache.CacheManager(getCacheManagerConfigFileInputStream()));
+            return em;
+        }
+        else
+        {
+            em.setCacheManager(cacheManager);
+            return em;
+        }
+    }
+
+    /**
+     * 返回配置文件流 避免ehcache配置文件一直被占用，无法完全销毁项目重新部署
+     */
+    protected InputStream getCacheManagerConfigFileInputStream()
+    {
+        String configFile = "classpath:ehcache/ehcache-shiro.xml";
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = ResourceUtils.getInputStreamForPath(configFile);
+            byte[] b = IOUtils.toByteArray(inputStream);
+            InputStream in = new ByteArrayInputStream(b);
+            return in;
+        }
+        catch (IOException e)
+        {
+            throw new ConfigurationException(
+                    "Unable to obtain input stream for cacheManagerConfigFile [" + configFile + "]", e);
+        }
+        finally
+        {
+            IOUtils.closeQuietly(inputStream);
+        }
     }
 
 

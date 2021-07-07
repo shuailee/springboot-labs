@@ -14,9 +14,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <mysql-connecto.version>8.0.19</mysql-connecto.version>
-        <spring.shiro.version>1.6.0</spring.shiro.version>
+        <spring.shiro.version>1.7.1</spring.shiro.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <commons.io.version>2.10.0</commons.io.version>
+        <commons.fileupload.version>1.4</commons.fileupload.version>
     </properties>
 
     <dependencies>
@@ -68,20 +70,34 @@
             <version>${mysql-connecto.version}</version>
         </dependency>
 
-        <!-- shiro -->
+        <!-- Shiro使用Spring框架 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${spring.shiro.version}</version>
         </dependency>
-
-        <!--开启 cache 缓存-->
+        <!-- Shiro使用EhCache缓存框架 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${spring.shiro.version}</version>
         </dependency>
 
-        <!-- Swagger核心包 start -->
+
+        <!-- io常用工具类 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+        </dependency>
+        <!-- 文件上传工具类 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons.fileupload.version}</version>
+        </dependency>
+
+        <!-- Swagger2核心包 start -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
