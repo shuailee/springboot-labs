@@ -1,5 +1,8 @@
 package com.klein.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -24,20 +27,24 @@ import javax.servlet.http.HttpSession;
  * @author: klein
  * @date: 2021-06-09 16:33
  **/
+
+
+@Api(tags = {"权限管理"})
 @Slf4j
 @RestController
 public class HomeController {
 
     /**
      * 用户登录
-     * @param request
+     * @param request HttpServletRequest request,
      * @param username
      * @param password
-     * @param session
+     * @param session , HttpSession session
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login(HttpServletRequest request, String username, String password,  HttpSession session) {
+    @ApiOperation(value = "登录接口")
+    @GetMapping(value = "/login")
+    public String login( String username, String password) {
         //对密码进行加密
         //password =new SimpleHash("md5", password, ByteSource.Util.bytes(username.toLowerCase() + "shiro"),2).toHex();
         //如果有点击  记住我
@@ -73,7 +80,8 @@ public class HomeController {
      * 登出  这个方法没用到,用的是shiro默认的logout
      * @return
      */
-    @RequestMapping("/logout")
+    @ApiOperation(value = "登出接口")
+    @GetMapping("/logout")
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();

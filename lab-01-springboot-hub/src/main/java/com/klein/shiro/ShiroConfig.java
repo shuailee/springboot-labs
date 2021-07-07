@@ -83,9 +83,17 @@ public class ShiroConfig {
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/", "anon");
-//        filterChainDefinitionMap.put("/css/**", "anon");
-//        filterChainDefinitionMap.put("/js/**", "anon");
-//        filterChainDefinitionMap.put("/img/**", "anon");
+
+        /*swagger2 页面不需要登录访问*/
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger/**", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/configuration/**", "anon");
+        filterChainDefinitionMap.put("/doc.html","anon");
+        filterChainDefinitionMap.put("/swagger-ui.html**", "anon");
+
         filterChainDefinitionMap.put("/druid/**", "anon");
         //logout登出是shiro提供的过滤器
         filterChainDefinitionMap.put("/logout", "logout");
