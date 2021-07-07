@@ -38,35 +38,6 @@ swagger 的UI增强版：https://github.com/xiaoymin/swagger-bootstrap-ui
  @ApiImplicitParam：一个请求参数
  @ApiImplicitParams：多个请求参数
  */
-public class People {
-    @PostMapping("/people")
-    @ApiOperation(value = "保存人员信息")
-    @ApiResponses({
-           @ApiResponse(code = 0, message = "保存成功"),
-           @ApiResponse(code = 1, message = "保存失败")
-    })
-    public FrontResult save(
-             @ApiParam(value = "保存参数", example = "")
-             @RequestBody People people) {
-         people.setBirthday(Timestamp.valueOf(LocalDateTime.now()));
-         return new FrontResult(FrontResult.SUCCEED, "保存成功", peopleDao.save(people));
-    }
-}
-
-
-@Data
-@ApiModel(description = "人员信息保存请求对象")
-public class People {
-    @ApiModelProperty(value = "人员编号")
-    private Long id;
-    @ApiModelProperty(value = "姓名", required = true,position = 1)
-    private String name;
-    @ApiModelProperty(value = "性别", required = true,position = 2)
-    private String sex;
-    @ApiModelProperty(value = "生日", required = true,position = 3)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp birthday;
-}
 ```
 
 #### 2 druid连接池
@@ -77,9 +48,17 @@ public class People {
 * mybatis-plus是对mybatis的增强，未对mybatis做修改，所以mybatis的所有配置和使用方式都保持不变。使用时只需要引入mybatis-plus的maver依赖即可。
 * 在不需要自定义sql的情况下mybatis-plus不需要配置xml，只需要定义mapper接口继承BaseMapper 即可实现大部分CRUD操作
 * 关于分页，mybatis分页需要使用PageHelper 插件完成分页，而mybatis-plus内置了分页拦截器PaginationInnerInterceptor实现，需要配置在MybatisPlusInterceptor 类
-
+* 接口映射器mapper类只需要继承BaseMapper接口即可，也可以继承Iservice接口，它提供了比前者更强大的CRUD API
+* [IService接口](https://baomidou.com/guide/crud-interface.html#service-crud-%E6%8E%A5%E5%8F%A3)
 
 #### 4 登录和权限管理 shiro
 http://greycode.github.io/shiro/doc/reference.html
 https://github.com/greycode/shiro
 
+#### 5 Ehcache
+官网：https://www.ehcache.org/documentation/
+##### Ehcache本地缓存使用步骤： 
+1. 添加pom依赖
+2. 添加xml配置
+3. 启动类启用cache注解，
+4. 使用@Cacheable(cacheNames = "person",key = "#id") 缓存方法结果

@@ -42,6 +42,13 @@
             <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--druid连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -68,11 +75,10 @@
             <version>${spring.shiro.version}</version>
         </dependency>
 
-
+        <!--开启 cache 缓存-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
         <!-- Swagger核心包 start -->
