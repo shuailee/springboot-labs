@@ -76,12 +76,6 @@
             <artifactId>shiro-spring</artifactId>
             <version>${spring.shiro.version}</version>
         </dependency>
-        <!-- Shiro使用EhCache缓存框架 -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${spring.shiro.version}</version>
-        </dependency>
 
 
         <!-- io常用工具类 -->
