@@ -1,0 +1,13 @@
+version: '3'
+services:
+  lab-13-springboot-jwt-springsecurity:
+    environment:
+      TZ: Asia/Shanghai
+    restart: always
+    image: registry.cn-hangzhou.aliyuncs.com/shuailee/lab-13-springboot-jwt-springsecurity:latest
+    container_name: lab-13-springboot-jwt-springsecurity
+    volumes:
+      - /data/logs/lab-13-springboot-jwt-springsecurity:/data/logs
+    ports:
+      - 8080:8080
+    user: root

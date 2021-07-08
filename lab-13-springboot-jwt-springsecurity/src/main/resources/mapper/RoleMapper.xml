@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.klein.dao.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.klein.dao.model.Role" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tenant_id" property="tenantId" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user" property="updatedUser" jdbcType="VARCHAR" />
+    <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tenant_id, role_name, status, is_deleted, updated_time, created_time, updated_user, 
+    created_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.klein.dao.model.Role" >
+    insert into role (id, tenant_id, role_name, 
+      status, is_deleted, updated_time, 
+      created_time, updated_user, created_user
+      )
+    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR}, #{createdUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.klein.dao.model.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="updatedTime != null" >
+        updated_time,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="updatedUser != null" >
+        updated_user,
+      </if>
+      <if test="createdUser != null" >
+        created_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUser != null" >
+        #{createdUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klein.dao.model.Role" >
+    update role
+    <set >
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        updated_user = #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUser != null" >
+        created_user = #{createdUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klein.dao.model.Role" >
+    update role
+    set tenant_id = #{tenantId,jdbcType=VARCHAR},
+      role_name = #{roleName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=VARCHAR},
+      created_user = #{createdUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
